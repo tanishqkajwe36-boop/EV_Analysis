@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}EV Insights — Market Intelligence Platform{% endblock %}</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand-link" href="/">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div>EV<span>Insights</span></div>
+        <span class="brand-badge">Market Intelligence</span>
+      </a>
+
+      <nav class="site-nav">
+        <a class="nav-link {% if active_page == 'overview' %}active{% endif %}" href="/">Overview</a>
+        <a class="nav-link {% if active_page == 'dashboard' %}active{% endif %}" href="/dashboard">Tableau Dashboard</a>
+        <a class="nav-link {% if active_page == 'story' %}active{% endif %}" href="/story">Data Story</a>
+        <a class="nav-link {% if active_page == 'about' %}active{% endif %}" href="/about">Methodology</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn btn-secondary" href="/about">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Architecture
+        </a>
+        <a class="btn btn-primary" href="/dashboard">
+          <span>Explore Tableau</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-wrap">
+      <div class="footer-info">
+        <div class="footer-brand">EV Insights · Executive Mobility Intelligence</div>
+        <div class="footer-desc">Engineered with Python · SQLite · Plotly · Flask · Tableau Public</div>
+      </div>
+      <div class="footer-links">
+        <a href="/">Overview</a>
+        <span>·</span>
+        <a href="/dashboard">Dashboard</a>
+        <span>·</span>
+        <a href="/story">Story</a>
+        <span>·</span>
+        <a href="/about">Data Quality & Methodology</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

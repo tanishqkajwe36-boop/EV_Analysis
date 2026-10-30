@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Methodology & Data Quality — EV Insights{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="page-hero-wrap">
+    <div class="hero-pill">
+      <span class="hero-pulse"></span>
+      TRANSPARENT BY DESIGN
+    </div>
+    <h1>Methodology & Data Engineering</h1>
+    <p>Comprehensive audit of data cleaning procedures, schema validation, aggregation logic, and reproducibility instructions.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="method-grid">
+    <article class="method-card">
+      <h2>
+        <span>📦</span>
+        Source Datasets & Pipeline
+      </h2>
+      <p>
+        The analysis ingestion pipeline processes two raw partitions:
+      </p>
+      <ul>
+        <li><strong>ev_market_train.csv</strong>: 200,000 raw observations across 37 columns.</li>
+        <li><strong>ev_market_test.csv</strong>: 100,000 raw observations across 37 columns.</li>
+      </ul>
+      <p>
+        During automated cleaning, 1 duplicate vehicle ID was isolated and removed from the training split, resulting in exactly <strong>199,999 valid vehicle records</strong>. Aggregates and charts are derived exclusively from this cleaned training split to preserve strict analytical validity.
+      </p>
+    </article>
+
+    <article class="method-card">
+      <h2>
+        <span>🧹</span>
+        Data Hygiene & Imputation Rules
+      </h2>
+      <p>
+        The ingestion pipeline (<code>src/build_data.py</code>) applies deterministic cleaning rules:
+      </p>
+      <ul>
+        <li><strong>Whitespace & Normalization</strong>: Categorical attributes are stripped of leading/trailing spaces and empty strings mapped to standard nulls.</li>
+        <li><strong>Numeric Type Casting</strong>: All measures (range, battery, price, sales) cast to 64-bit numeric types.</li>
+        <li><strong>Missing Value Imputation</strong>: Missing numeric values imputed using the segment-wide median; missing text mapped to <code>Unknown</code>.</li>
+        <li><strong>Boundary Enforcement</strong>: Ratings constrained to [0.0, 5.0]; invalid negative prices or capacities clamped to 0.</li>
+      </ul>
+    </article>
+
+    <article class="method-card">
+      <h2>
+        <span>📊</span>
+        Interpretation Guidelines
+      </h2>
+      <p>
+        The source dataset reflects a high-fidelity synthetic / benchmark mobility distribution:
+      </p>
+      <ul>
+        <li><code>annual_sales_units</code> represents vehicle model-level performance estimates. Row sums should not be construed as statutory national vehicle registrations.</li>
+        <li>The training split was retained for exploratory, descriptive, and spatial visualization. The test split is held separately in the SQLite database to avoid data leakage.</li>
+        <li>All KPI percentages and averages are cross-verified between SQLite queries and Pandas aggregations.</li>
+      </ul>
+    </article>
+
+    <article class="method-card">
+      <h2>
+        <span>⚡</span>
+        Local Reproducibility
+      </h2>
+      <p>
+        The pipeline can be executed in any Python 3.10+ environment:
+      </p>
+      <ul>
+        <li>Rebuild database & CSVs: <code>python src/build_data.py</code></li>
+        <li>Run validation tests: <code>python src/validate_project.py</code></li>
+        <li>Launch local web application: <code>python app.py</code></li>
+      </ul>
+      <p style="margin-top: 14px;">
+        Database schema, index definitions, and sample analytic SQL scripts are located in the <code>sql/</code> folder.
+      </p>
+    </article>
+  </div>
+</div>
+{% endblock %}
